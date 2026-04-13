@@ -1,0 +1,9 @@
+pillow==12.1.1
+psycopg2-binary==2.9.11
+python-decouple==3.8
+resend==2.28.0
+Django>=5.0
+psycopg2-binary>=2.9
+Pillow>=10.0
+python-decouple>=3.8
+resend>=2.0
