@@ -1,0 +1,93 @@
+services:
+
+  # ─────────────────────────────────────────
+  # PostgreSQL 16
+  # ─────────────────────────────────────────
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: anupam_bearings_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-changeme}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"   # Remove in production
+
+  # ─────────────────────────────────────────
+  # Django — Anupam Bearings
+  # ─────────────────────────────────────────
+  web:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      # Override DB settings to point at the Compose 'db' service
+      DB_ENGINE: django.db.backends.postgresql
+      DB_NAME: anupam_bearings_db
+      DB_USER: postgres
+      DB_PASSWORD: ${DB_PASSWORD:-changeme}
+      DB_HOST: db
+      DB_PORT: 5432
+      # Override Ollama URL to reach the sidecar container
+      OLLAMA_URL: http://ollama:11434/api/generate
+    ports:
+      - "8000:8000"
+    volumes:
+      - static_files:/app/staticfiles
+      - media_files:/app/media
+
+  # ─────────────────────────────────────────
+  # Ollama — Local LLM (llama3 chatbot)
+  # Pull & serve the model on first start.
+  # Remove this service if you use a remote LLM.
+  # ─────────────────────────────────────────
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"   # Expose if you want to call Ollama directly
+    # GPU support (uncomment if you have an NVIDIA GPU + nvidia-container-toolkit)
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  # ─────────────────────────────────────────
+  # One-shot container: pull the llama3 model
+  # Runs once after Ollama is up, then exits.
+  # ─────────────────────────────────────────
+  ollama-pull:
+    image: curlimages/curl:latest
+    depends_on:
+      - ollama
+    restart: "no"
+    entrypoint: >
+      sh -c "
+        echo 'Waiting for Ollama...';
+        until curl -sf http://ollama:11434/api/tags; do sleep 3; done;
+        echo 'Pulling llama3...';
+        curl -X POST http://ollama:11434/api/pull -d '{\"name\":\"llama3\"}';
+        echo 'Done.';
+      "
+
+volumes:
+  postgres_data:
+  static_files:
+  media_files:
+  ollama_data:
