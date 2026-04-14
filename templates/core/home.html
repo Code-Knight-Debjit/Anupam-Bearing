@@ -2,33 +2,31 @@
 {% load static %}
 
 {% block intro %}
-<!-- ══ CINEMATIC INTRO ══ -->
+<!-- ══ CINEMATIC VIDEO INTRO ══ -->
 <div id="intro-overlay" role="presentation" aria-hidden="true">
   <div class="dot-grid"></div>
-  <div class="intro-bearing">
-    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-      <!-- Outer ring -->
-      <circle cx="100" cy="100" r="90" fill="none" stroke="#3a3a3a" stroke-width="12"/>
-      <!-- Inner ring -->
-      <circle cx="100" cy="100" r="52" fill="none" stroke="#3a3a3a" stroke-width="10"/>
-      <!-- Bore -->
-      <circle cx="100" cy="100" r="30" fill="none" stroke="#ff6a00" stroke-width="6"/>
-      <!-- Balls -->
-      <circle cx="100" cy="14"  r="10" fill="#ff6a00"/>
-      <circle cx="100" cy="186" r="10" fill="#ff6a00"/>
-      <circle cx="14"  cy="100" r="10" fill="#a14000"/>
-      <circle cx="186" cy="100" r="10" fill="#a14000"/>
-      <circle cx="36"  cy="36"  r="10" fill="#ff6a00" opacity="0.8"/>
-      <circle cx="164" cy="164" r="10" fill="#ff6a00" opacity="0.8"/>
-      <circle cx="164" cy="36"  r="10" fill="#a14000" opacity="0.8"/>
-      <circle cx="36"  cy="164" r="10" fill="#a14000" opacity="0.8"/>
-      <!-- Cage rings -->
-      <circle cx="100" cy="100" r="72" fill="none" stroke="#2a2a2a" stroke-width="4" stroke-dasharray="8 4"/>
-    </svg>
+
+  <!-- Full-bleed video -->
+  <video
+    id="intro-video"
+    class="intro-video"
+    autoplay
+    muted
+    playsinline
+    preload="auto"
+  >
+    <source src="{% static 'videos/cinematic_intro.mp4' %}" type="video/mp4" />
+  </video>
+
+  <!-- Edge vignette so the dark overlay feels natural -->
+  <div class="intro-vignette"></div>
+
+  <!-- Branding text that fades in over the video -->
+  <div class="intro-branding">
+    {% comment %} <div class="intro-title">Anupam <span>Bearings</span></div> {% endcomment %}
+    <div class="intro-subtitle">Driving Excellence with Precision</div>
+    <div class="intro-bar"></div>
   </div>
-  <div class="intro-title">Anupam <span>Bearings</span></div>
-  <div class="intro-subtitle">Driving Excellence with Precision</div>
-  <div class="intro-bar"></div>
 </div>
 {% endblock %}
 
@@ -37,15 +35,10 @@
 <!-- ══ HERO SECTION ══ -->
 <section class="hero-section" aria-label="Hero">
 
-  <!-- Slide 1: Precision Bearings — Image 4 (Timken roller bearings) -->
+  <!-- Slide 1 -->
   <div class="hero-slide active">
     <div class="hero-slide-img-wrap">
-      <img
-        src="{% static 'images/hero/hero-bearings.png' %}"
-        alt="Timken precision roller bearings"
-        class="hero-slide-img"
-        loading="eager"
-      />
+      <img src="{% static 'images/hero/hero-bearings.png' %}" alt="Timken precision roller bearings" class="hero-slide-img" loading="eager" />
     </div>
     <div class="hero-content">
       <div class="partner-badge">✦ Certified Timken Partner</div>
@@ -57,15 +50,10 @@
     </div>
   </div>
 
-  <!-- Slide 2: Bearing Housings — Image 3 (Timken plummer blocks) -->
+  <!-- Slide 2 -->
   <div class="hero-slide">
     <div class="hero-slide-img-wrap">
-      <img
-        src="{% static 'images/hero/hero-housings.png' %}"
-        alt="Timken bearing housings and plummer blocks"
-        class="hero-slide-img"
-        loading="lazy"
-      />
+      <img src="{% static 'images/hero/hero-housings.png' %}" alt="Timken bearing housings and plummer blocks" class="hero-slide-img" loading="lazy" />
     </div>
     <div class="hero-content">
       <div class="hero-label">Bearing Housings</div>
@@ -78,15 +66,10 @@
     </div>
   </div>
 
-  <!-- Slide 3: Power Transmission — Image 1 (Groeneveld-BEKA lubrication systems) -->
+  <!-- Slide 3 -->
   <div class="hero-slide">
     <div class="hero-slide-img-wrap">
-      <img
-        src="{% static 'images/hero/hero-lubrication.png' %}"
-        alt="Groeneveld-BEKA automatic lubrication systems"
-        class="hero-slide-img"
-        loading="lazy"
-      />
+      <img src="{% static 'images/hero/hero-lubrication.png' %}" alt="Groeneveld-BEKA automatic lubrication systems" class="hero-slide-img" loading="lazy" />
     </div>
     <div class="hero-content">
       <div class="hero-label">Power Transmission</div>
@@ -99,15 +82,10 @@
     </div>
   </div>
 
-  <!-- Slide 4: Linear Motion — Image 2 (Rollon linear guides & rails) -->
+  <!-- Slide 4 -->
   <div class="hero-slide">
     <div class="hero-slide-img-wrap">
-      <img
-        src="{% static 'images/hero/hero-linear.png' %}"
-        alt="Rollon linear guides and motion rails"
-        class="hero-slide-img"
-        loading="lazy"
-      />
+      <img src="{% static 'images/hero/hero-linear.png' %}" alt="Rollon linear guides and motion rails" class="hero-slide-img" loading="lazy" />
     </div>
     <div class="hero-content">
       <div class="hero-label">Linear Motion</div>
@@ -115,7 +93,7 @@
       <p class="hero-desc">High-precision Rollon linear guides, telescopic rails, and curved track systems engineered for demanding industrial automation and heavy-load applications.</p>
       <div class="hero-actions">
         <a href="{% url 'products:list' %}#linear-motion" class="btn-primary">View Products ›</a>
-        {% comment %} <a href="{% url 'contact:contact' %}" class="btn-ghost btn-ghost-white">Get a Quote</a> {% endcomment %}
+        <a href="{% url 'contact:contact' %}" class="btn-ghost btn-ghost-white">Get a Quote</a>
       </div>
     </div>
   </div>
@@ -151,15 +129,8 @@
     <div class="about-split">
       <div class="anim-slide-left">
         <div class="about-img-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
-            alt="Industrial bearing manufacturing facility"
-            loading="lazy"
-          />
-          <div class="about-badge">
-            <span>2023</span>
-            Timken Partner
-          </div>
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Industrial bearing manufacturing facility" loading="lazy" />
+          <div class="about-badge"><span>2023</span>Timken Partner</div>
         </div>
       </div>
       <div class="anim-slide-right">
@@ -204,7 +175,6 @@
       </div>
       <a href="{% url 'products:list' %}" class="btn-ghost anim-fade-up" style="flex-shrink:0;">View All Products ›</a>
     </div>
-
     <div class="products-grid anim-stagger-group">
       {% for product in featured_products %}
       <article class="product-card anim-stagger-child anim-fade-up">
@@ -219,19 +189,13 @@
           <p class="product-card-cat">{{ product.category.name }}</p>
           <h3 class="product-card-name">{{ product.name }}</h3>
           <p class="product-card-desc">{{ product.description|truncatewords:18 }}</p>
-          <a href="#" class="product-card-cta"
-             data-enquire="{{ product.id }}"
-             data-name="{{ product.name }}">
-            Enquire Now →
-          </a>
+          <a href="#" class="product-card-cta" data-enquire="{{ product.id }}" data-name="{{ product.name }}">Enquire Now →</a>
         </div>
       </article>
       {% empty %}
       {% for cat in categories %}
       <article class="product-card anim-stagger-child anim-fade-up">
-        <div class="product-card-img">
-          <span class="product-card-icon">{{ cat.icon }}</span>
-        </div>
+        <div class="product-card-img"><span class="product-card-icon">{{ cat.icon }}</span></div>
         <div class="product-card-body">
           <p class="product-card-cat">Category</p>
           <h3 class="product-card-name">{{ cat.name }}</h3>
@@ -263,38 +227,14 @@
       {% empty %}
       {% for f in "12345678" %}
       <div class="feature-card anim-stagger-child anim-fade-up" data-delay="{{ forloop.counter0 }}">
-        {% if forloop.counter == 1 %}
-        <div class="feature-icon">⚡</div>
-        <h3 class="feature-title">Just-in-Time Delivery</h3>
-        <p class="feature-desc">Annual rate contracts and JIT delivery systems minimize your inventory costs and downtime.</p>
-        {% elif forloop.counter == 2 %}
-        <div class="feature-icon">🏆</div>
-        <h3 class="feature-title">Certified Timken Partner</h3>
-        <p class="feature-desc">Official authorized supplier of genuine Timken bearings and motion solutions since 2023.</p>
-        {% elif forloop.counter == 3 %}
-        <div class="feature-icon">🔬</div>
-        <h3 class="feature-title">Pre-Dispatch Inspection</h3>
-        <p class="feature-desc">Every product undergoes rigorous quality inspection before dispatch from our warehouses.</p>
-        {% elif forloop.counter == 4 %}
-        <div class="feature-icon">🛠️</div>
-        <h3 class="feature-title">Bearing Clinics</h3>
-        <p class="feature-desc">On-site training programs, seminars, and bearing clinics to address your specific challenges.</p>
-        {% elif forloop.counter == 5 %}
-        <div class="feature-icon">📐</div>
-        <h3 class="feature-title">Mounting Assistance</h3>
-        <p class="feature-desc">Expert assistance in bearing mounting and maintenance to ensure optimal performance and longevity.</p>
-        {% elif forloop.counter == 6 %}
-        <div class="feature-icon">🗺️</div>
-        <h3 class="feature-title">Dual-City Presence</h3>
-        <p class="feature-desc">Strategically located in Bengaluru and Chennai for faster service across South India.</p>
-        {% elif forloop.counter == 7 %}
-        <div class="feature-icon">📋</div>
-        <h3 class="feature-title">Annual Contracts</h3>
-        <p class="feature-desc">Flexible annual service contracts and bearing bank solutions to keep your operations running.</p>
-        {% elif forloop.counter == 8 %}
-        <div class="feature-icon">🔄</div>
-        <h3 class="feature-title">Preventive Maintenance</h3>
-        <p class="feature-desc">Pro-active maintenance programs to prevent failure before it impacts your production line.</p>
+        {% if forloop.counter == 1 %}<div class="feature-icon">⚡</div><h3 class="feature-title">Just-in-Time Delivery</h3><p class="feature-desc">Annual rate contracts and JIT delivery systems minimize your inventory costs and downtime.</p>
+        {% elif forloop.counter == 2 %}<div class="feature-icon">🏆</div><h3 class="feature-title">Certified Timken Partner</h3><p class="feature-desc">Official authorized supplier of genuine Timken bearings and motion solutions since 2023.</p>
+        {% elif forloop.counter == 3 %}<div class="feature-icon">🔬</div><h3 class="feature-title">Pre-Dispatch Inspection</h3><p class="feature-desc">Every product undergoes rigorous quality inspection before dispatch from our warehouses.</p>
+        {% elif forloop.counter == 4 %}<div class="feature-icon">🛠️</div><h3 class="feature-title">Bearing Clinics</h3><p class="feature-desc">On-site training programs, seminars, and bearing clinics to address your specific challenges.</p>
+        {% elif forloop.counter == 5 %}<div class="feature-icon">📐</div><h3 class="feature-title">Mounting Assistance</h3><p class="feature-desc">Expert assistance in bearing mounting and maintenance to ensure optimal performance and longevity.</p>
+        {% elif forloop.counter == 6 %}<div class="feature-icon">🗺️</div><h3 class="feature-title">Dual-City Presence</h3><p class="feature-desc">Strategically located in Bengaluru and Chennai for faster service across South India.</p>
+        {% elif forloop.counter == 7 %}<div class="feature-icon">📋</div><h3 class="feature-title">Annual Contracts</h3><p class="feature-desc">Flexible annual service contracts and bearing bank solutions to keep your operations running.</p>
+        {% elif forloop.counter == 8 %}<div class="feature-icon">🔄</div><h3 class="feature-title">Preventive Maintenance</h3><p class="feature-desc">Pro-active maintenance programs to prevent failure before it impacts your production line.</p>
         {% endif %}
       </div>
       {% endfor %}
@@ -309,12 +249,8 @@
   <div class="container">
     <div class="cta-banner-inner">
       <div>
-        <h2 class="cta-title anim-slide-left" id="cta-heading">
-          Ready to optimize your<br/><span class="accent">industrial operations?</span>
-        </h2>
-        <p class="anim-fade-up" style="color:rgba(255,255,255,0.55);margin-top:0.75rem;font-size:1.05rem;">
-          Talk to our bearing specialists today — Bengaluru &amp; Chennai offices available.
-        </p>
+        <h2 class="cta-title anim-slide-left" id="cta-heading">Ready to optimize your<br/><span class="accent">industrial operations?</span></h2>
+        <p class="anim-fade-up" style="color:rgba(255,255,255,0.55);margin-top:0.75rem;font-size:1.05rem;">Talk to our bearing specialists today — Bengaluru &amp; Chennai offices available.</p>
       </div>
       <div class="anim-slide-right" style="display:flex;gap:1rem;flex-wrap:wrap;">
         <a href="{% url 'contact:contact' %}" class="btn-primary">Contact Us ›</a>
