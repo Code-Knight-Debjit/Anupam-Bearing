@@ -1,8 +1,10 @@
-from django.http import JsonResponse, StreamingHttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.conf import settings
-import json, requests
+import json, requests, uuid
+
+from contact.models import ChatMessage
 
 SYSTEM_CONTEXT = """You are Anupam Assistant, the AI assistant for Anupam Bearings — a certified Timken parts supplier based in India with offices in Bengaluru and Chennai.
 
@@ -29,9 +31,26 @@ Be helpful, professional, and concise. Answer questions about bearings, products
 def chat(request):
     try:
         data = json.loads(request.body)
-        user_message = data.get('message', '')
+        user_message = data.get('message', '').strip()
+        if not user_message:
+            return JsonResponse({'success': False, 'reply': 'Please enter a message.'}, status=400)
+
         history = data.get('history', [])
 
+        # Get or create session ID
+        session_id = request.session.get('chat_session_id')
+        if not session_id:
+            session_id = str(uuid.uuid4())
+            request.session['chat_session_id'] = session_id
+
+        # Save user message to DB
+        ChatMessage.objects.create(
+            session_id=session_id,
+            role='user',
+            content=user_message,
+        )
+
+        # Build Ollama prompt
         messages = []
         for h in history[-10:]:
             messages.append({"role": h['role'], "content": h['content']})
@@ -58,8 +77,15 @@ def chat(request):
                 reply = "I'm having trouble connecting to my knowledge base right now. Please contact us directly at info@anupambearings.com or call +91-98844-00741."
         except requests.exceptions.ConnectionError:
             reply = "The AI service is currently offline. For immediate assistance, please call us at +91-98844-00741 (Bengaluru) or +91-98400-88509 (Chennai), or email info@anupambearings.com."
-        except Exception as e:
+        except Exception:
             reply = "I encountered an error. Please contact us directly at info@anupambearings.com."
+
+        # Save assistant reply to DB
+        ChatMessage.objects.create(
+            session_id=session_id,
+            role='assistant',
+            content=reply,
+        )
 
         return JsonResponse({'success': True, 'reply': reply})
     except Exception as e:
