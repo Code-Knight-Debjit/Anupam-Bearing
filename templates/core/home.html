@@ -37,39 +37,39 @@
 <!-- ══ HERO SECTION ══ -->
 <section class="hero-section" aria-label="Hero">
 
-  <!-- Decorative rotating bearing graphic -->
-  <svg class="bearing-hero-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <circle cx="200" cy="200" r="185" fill="none" stroke="white" stroke-width="20"/>
-    <circle cx="200" cy="200" r="110" fill="none" stroke="white" stroke-width="16"/>
-    <circle cx="200" cy="200" r="60"  fill="none" stroke="white" stroke-width="8" stroke-dasharray="10 6"/>
-    <circle cx="200" cy="18"  r="20" fill="white"/>
-    <circle cx="200" cy="382" r="20" fill="white"/>
-    <circle cx="18"  cy="200" r="20" fill="white"/>
-    <circle cx="382" cy="200" r="20" fill="white"/>
-    <circle cx="68"  cy="68"  r="18" fill="white" opacity="0.7"/>
-    <circle cx="332" cy="332" r="18" fill="white" opacity="0.7"/>
-    <circle cx="332" cy="68"  r="18" fill="white" opacity="0.7"/>
-    <circle cx="68"  cy="332" r="18" fill="white" opacity="0.7"/>
-    <circle cx="200" cy="200" r="145" fill="none" stroke="white" stroke-width="3" stroke-dasharray="6 8" opacity="0.3"/>
-  </svg>
-
-  <!-- Slides -->
+  <!-- Slide 1: Precision Bearings — Image 4 (Timken roller bearings) -->
   <div class="hero-slide active">
+    <div class="hero-slide-img-wrap">
+      <img
+        src="{% static 'images/hero/hero-bearings.png' %}"
+        alt="Timken precision roller bearings"
+        class="hero-slide-img"
+        loading="eager"
+      />
+    </div>
     <div class="hero-content">
       <div class="partner-badge">✦ Certified Timken Partner</div>
       <h1 class="hero-title">Precision <span class="accent">Bearings</span><br/>Built to Last</h1>
       <p class="hero-desc">India's trusted source for Timken tapered roller bearings, bearing housings, and complete motion solutions — delivered with Just-in-Time efficiency.</p>
       <div class="hero-actions">
         <a href="{% url 'products:list' %}" class="btn-primary">Explore Products ›</a>
-        {% comment %} <a href="{% url 'contact:contact' %}" class="btn-ghost btn-ghost-white">Get a Quote</a> {% endcomment %}
       </div>
     </div>
   </div>
 
+  <!-- Slide 2: Bearing Housings — Image 3 (Timken plummer blocks) -->
   <div class="hero-slide">
+    <div class="hero-slide-img-wrap">
+      <img
+        src="{% static 'images/hero/hero-housings.png' %}"
+        alt="Timken bearing housings and plummer blocks"
+        class="hero-slide-img"
+        loading="lazy"
+      />
+    </div>
     <div class="hero-content">
       <div class="hero-label">Bearing Housings</div>
-      <h1 class="hero-title">SNT Plummer <span class="accent">Block</span><br/>& Split Housings</h1>
+      <h1 class="hero-title">SNT Plummer <span class="accent">Block</span><br/>&amp; Split Housings</h1>
       <p class="hero-desc">From pillow block to SNT Plummer block and Timken split bearing housings — engineered for heavy-duty industrial reliability across India.</p>
       <div class="hero-actions">
         <a href="{% url 'products:list' %}#bearing-housings" class="btn-primary">View Housings ›</a>
@@ -78,7 +78,16 @@
     </div>
   </div>
 
+  <!-- Slide 3: Power Transmission — Image 1 (Groeneveld-BEKA lubrication systems) -->
   <div class="hero-slide">
+    <div class="hero-slide-img-wrap">
+      <img
+        src="{% static 'images/hero/hero-lubrication.png' %}"
+        alt="Groeneveld-BEKA automatic lubrication systems"
+        class="hero-slide-img"
+        loading="lazy"
+      />
+    </div>
     <div class="hero-content">
       <div class="hero-label">Power Transmission</div>
       <h1 class="hero-title">Chains, Couplings<br/>&amp; <span class="accent">Drives</span></h1>
@@ -90,6 +99,27 @@
     </div>
   </div>
 
+  <!-- Slide 4: Linear Motion — Image 2 (Rollon linear guides & rails) -->
+  <div class="hero-slide">
+    <div class="hero-slide-img-wrap">
+      <img
+        src="{% static 'images/hero/hero-linear.png' %}"
+        alt="Rollon linear guides and motion rails"
+        class="hero-slide-img"
+        loading="lazy"
+      />
+    </div>
+    <div class="hero-content">
+      <div class="hero-label">Linear Motion</div>
+      <h1 class="hero-title">Linear Guides<br/>&amp; <span class="accent">Motion Rails</span></h1>
+      <p class="hero-desc">High-precision Rollon linear guides, telescopic rails, and curved track systems engineered for demanding industrial automation and heavy-load applications.</p>
+      <div class="hero-actions">
+        <a href="{% url 'products:list' %}#linear-motion" class="btn-primary">View Products ›</a>
+        <a href="{% url 'contact:contact' %}" class="btn-ghost btn-ghost-white">Get a Quote</a>
+      </div>
+    </div>
+  </div>
+
   <!-- Controls -->
   <button class="slider-arrow prev" aria-label="Previous slide">‹</button>
   <button class="slider-arrow next" aria-label="Next slide">›</button>
@@ -97,6 +127,7 @@
     <button class="slider-dot active" role="tab" aria-label="Slide 1"></button>
     <button class="slider-dot" role="tab" aria-label="Slide 2"></button>
     <button class="slider-dot" role="tab" aria-label="Slide 3"></button>
+    <button class="slider-dot" role="tab" aria-label="Slide 4"></button>
   </div>
 </section>
 
