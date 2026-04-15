@@ -4,54 +4,21 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ── INTRO OVERLAY (video-driven) ── */
+  /* ── INTRO OVERLAY ── */
   const intro = document.getElementById('intro-overlay');
   if (intro) {
     const seen = sessionStorage.getItem('ab_intro_seen');
- 
     if (seen) {
-      // Already watched this session — skip immediately
       intro.style.display = 'none';
     } else {
-      const video = document.getElementById('intro-video');
- 
-      const dismissIntro = () => {
+      const duration = window.innerWidth < 768 ? 2600 : 3400;
+      setTimeout(() => {
         intro.classList.add('fade-out');
         intro.addEventListener('animationend', () => {
           intro.style.display = 'none';
           sessionStorage.setItem('ab_intro_seen', '1');
         }, { once: true });
-      };
- 
-      if (video) {
-        // PRIMARY: dismiss when the video finishes playing
-        video.addEventListener('ended', dismissIntro, { once: true });
- 
-        // FALLBACK A: if video can't play (no codec / blocked autoplay)
-        // wait a maximum of 6 s then dismiss anyway
-        const maxWait = setTimeout(dismissIntro, 6000);
- 
-        // FALLBACK B: on mobile, autoplay is often blocked — detect stall
-        video.addEventListener('error', () => {
-          clearTimeout(maxWait);
-          dismissIntro();
-        }, { once: true });
- 
-        // Clear the hard timeout once the video actually ends cleanly
-        video.addEventListener('ended', () => clearTimeout(maxWait), { once: true });
- 
-        // Allow a tap/click anywhere to skip
-        intro.addEventListener('click', () => {
-          clearTimeout(maxWait);
-          video.pause();
-          dismissIntro();
-        }, { once: true });
- 
-      } else {
-        // No video element found — fall back to timed dismiss
-        const duration = window.innerWidth < 768 ? 2600 : 3400;
-        setTimeout(dismissIntro, duration);
-      }
+      }, duration);
     }
   }
  

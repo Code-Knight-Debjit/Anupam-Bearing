@@ -2,31 +2,33 @@
 {% load static %}
 
 {% block intro %}
-<!-- ══ CINEMATIC VIDEO INTRO ══ -->
+<!-- ══ CINEMATIC INTRO ══ -->
 <div id="intro-overlay" role="presentation" aria-hidden="true">
   <div class="dot-grid"></div>
-
-  <!-- Full-bleed video -->
-  <video
-    id="intro-video"
-    class="intro-video"
-    autoplay
-    muted
-    playsinline
-    preload="auto"
-  >
-    <source src="{% static 'videos/cinematic_intro.mp4' %}" type="video/mp4" />
-  </video>
-
-  <!-- Edge vignette so the dark overlay feels natural -->
-  <div class="intro-vignette"></div>
-
-  <!-- Branding text that fades in over the video -->
-  <div class="intro-branding">
-    {% comment %} <div class="intro-title">Anupam <span>Bearings</span></div> {% endcomment %}
-    <div class="intro-subtitle">Driving Excellence with Precision</div>
-    <div class="intro-bar"></div>
+  <div class="intro-bearing">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer ring -->
+      <circle cx="100" cy="100" r="90" fill="none" stroke="#3a3a3a" stroke-width="12"/>
+      <!-- Inner ring -->
+      <circle cx="100" cy="100" r="52" fill="none" stroke="#3a3a3a" stroke-width="10"/>
+      <!-- Bore -->
+      <circle cx="100" cy="100" r="30" fill="none" stroke="#ff6a00" stroke-width="6"/>
+      <!-- Balls -->
+      <circle cx="100" cy="14"  r="10" fill="#ff6a00"/>
+      <circle cx="100" cy="186" r="10" fill="#ff6a00"/>
+      <circle cx="14"  cy="100" r="10" fill="#a14000"/>
+      <circle cx="186" cy="100" r="10" fill="#a14000"/>
+      <circle cx="36"  cy="36"  r="10" fill="#ff6a00" opacity="0.8"/>
+      <circle cx="164" cy="164" r="10" fill="#ff6a00" opacity="0.8"/>
+      <circle cx="164" cy="36"  r="10" fill="#a14000" opacity="0.8"/>
+      <circle cx="36"  cy="164" r="10" fill="#a14000" opacity="0.8"/>
+      <!-- Cage rings -->
+      <circle cx="100" cy="100" r="72" fill="none" stroke="#2a2a2a" stroke-width="4" stroke-dasharray="8 4"/>
+    </svg>
   </div>
+  <div class="intro-title">Anupam <span>Bearings</span></div>
+  <div class="intro-subtitle">Driving Excellence with Precision</div>
+  <div class="intro-bar"></div>
 </div>
 {% endblock %}
 

@@ -24,7 +24,10 @@ FROM python:3.12-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PORT=8000
+    PORT=8000 \
+    DJANGO_SUPERUSER_USERNAME=admin \
+    DJANGO_SUPERUSER_PASSWORD=1234 \
+    DJANGO_SUPERUSER_EMAIL=admin@example.com
 
 WORKDIR /app
 
@@ -49,9 +52,15 @@ USER django
 
 EXPOSE 8000
 
-# Entrypoint: run migrations then start Gunicorn
+# Entrypoint: migrate, create superuser if not exists, then start Gunicorn
 CMD ["sh", "-c", \
   "python manage.py migrate --noinput && \
+   python manage.py shell -c \"\
+from django.contrib.auth import get_user_model; \
+User = get_user_model(); \
+User.objects.filter(username='admin').exists() or \
+User.objects.create_superuser('admin', 'admin@example.com', '1234') \
+\" && \
    gunicorn anupam_bearings.wsgi:application \
      --bind 0.0.0.0:${PORT} \
      --workers 3 \
