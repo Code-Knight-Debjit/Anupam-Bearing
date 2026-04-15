@@ -52,9 +52,10 @@ USER django
 
 EXPOSE 8000
 
-# Entrypoint: migrate, create superuser if not exists, then start Gunicorn
+# Entrypoint: migrate, seed data, create superuser if not exists, then start Gunicorn
 CMD ["sh", "-c", \
   "python manage.py migrate --noinput && \
+   python manage.py seed_data && \
    python manage.py shell -c \"\
 from django.contrib.auth import get_user_model; \
 User = get_user_model(); \
